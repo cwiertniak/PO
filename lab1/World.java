@@ -23,7 +23,6 @@ public class World {
     }
     public static void main(String[] args){
         System.out.println("system wystartował");
-        //String[] dirs = {"f", "f", "r", "l"};
 
         int n = args.length;
         Direction[] directions = new Direction[n];
