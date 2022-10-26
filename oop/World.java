@@ -1,4 +1,5 @@
 package agh.ics.oop;
+import java.util.List;
 
 public class World {
 
@@ -22,7 +23,16 @@ public class World {
         }
     }*/
     public static void main(String[] args){
-        Vector2d position1 = new Vector2d(1,-3);
+
+        //MoveDirection[] arguments = {MoveDirection.RIGHT, MoveDirection.FORWARD, MoveDirection.FORWARD, MoveDirection.FORWARD};
+        String[] arguments = {"r", "f", "lewo", "forward", "f", "E", "f", "f", "b", "b", "l"};
+        Animal zwierz = new Animal();
+        List<MoveDirection> moves = OptionsParser.parse(arguments);
+        for (MoveDirection dir: moves){
+            zwierz.move(dir);
+        }
+        System.out.println(zwierz.toString());
+        /*Vector2d position1 = new Vector2d(1,-3);
         System.out.println(position1);
         Vector2d position2 = new Vector2d(-2,2);
         System.out.println(position2);
@@ -49,7 +59,7 @@ public class World {
         System.out.println(prevdir);
 
         MapDirection unitdir = MapDirection.NORTH;
-        System.out.println(unitdir.toUnitVector());
+        System.out.println(unitdir.toUnitVector());*/
 
         /*System.out.println("system wystartował");
         int n = args.length;
