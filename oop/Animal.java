@@ -3,9 +3,24 @@ package agh.ics.oop;
 public class Animal {
     private MapDirection orientation = MapDirection.NORTH;
     private Vector2d position = new Vector2d(2,2);
+    private IWorldMap map;
+
+    public Animal(IWorldMap map){
+        this.map = map;
+    }
+
+    public Animal(IWorldMap map, Vector2d initialPosition){
+        this.map = map;
+        this.position = initialPosition;
+    }
 
     public String toString(){
-        return (orientation.toString() + position.toString());
+        return switch (this.orientation){
+            case NORTH -> "^";
+            case SOUTH -> "v";
+            case EAST -> ">";
+            case WEST -> "<";
+        };
     }
 
     public MapDirection getOrientation(){
@@ -26,13 +41,13 @@ public class Animal {
             case LEFT -> orientation = orientation.previous();
             case FORWARD -> {
                 Vector2d newposition = position.add(orientation.toUnitVector());
-                if (newposition.x >= 0 && newposition.x <= 4 && newposition.y >= 0 && newposition.y <= 4){
+                if (this.map.canMoveTo(newposition)){
                     position = newposition;
                 }
             }
             case BACKWARD -> {
                 Vector2d newposition = position.subtract(orientation.toUnitVector());
-                if (newposition.x >= 0 && newposition.x <= 4 && newposition.y >= 0 && newposition.y <= 4){
+                if (this.map.canMoveTo(newposition)){
                     position = newposition;
                 }
             }
