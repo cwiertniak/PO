@@ -3,6 +3,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class OptionsParser {
+    //public static List<MoveDirection> parse(String[] args){
     public static List<MoveDirection> parse(String[] args){
         List<MoveDirection> moves = new LinkedList<>();
         for (String dir: args){

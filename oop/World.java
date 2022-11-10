@@ -24,11 +24,18 @@ public class World {
     }*/
     public static void main(String[] args){
 
-        MoveDirection[] directions = new OptionsParser().parse(args);
-        IWorldMap map = new RectangularMap(10, 5);
-        Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
+        String[] dirs = {"f", "b", "r", "l", "f", "f", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f"};
+        //String[] dirs = {"f", "b", "f", "b"};
+        List<MoveDirection> directions = new OptionsParser().parse(dirs);
+        IWorldMap map = new GrassField(10);
+        /*Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
         IEngine engine = new SimulationEngine(directions, map, positions);
-        engine.run();
+        engine.run();*/
+        map.add(new Animal(map));
+        map.add(new Animal(map, new Vector2d(2, 2)));
+        map.add(new Animal(map, new Vector2d(3, 4)));
+        map.run(directions);
+        System.out.println(map.toString());
 
         /*String[] arguments = {"r", "f", "lewo", "forward", "f", "E", "f", "f", "b", "b", "l"};
         Animal zwierz = new Animal();

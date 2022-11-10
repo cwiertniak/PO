@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-class RectangularMap implements IWorldMap{
+class RectangularMap extends AbstractWorldMap{//implements IWorldMap{
     private int width;
     private int height;
     private List<Animal> animals = new LinkedList<>();
@@ -18,9 +18,27 @@ class RectangularMap implements IWorldMap{
         return animals;
     }
 
-    public void toString(IWorldMap map){
-        MapVisualizer mapvis = new MapVisualizer(map);
-        System.out.println(mapvis.draw(new Vector2d(0, 0), new Vector2d(width, height)));
+    /*public void toString(IWorldMap map){
+        MapVisualizer mapVis = new MapVisualizer(map);
+        System.out.println(mapVis.draw(new Vector2d(0, 0), new Vector2d(width, height)));
+    }*/
+
+    public void add(Animal animal){
+        if(place(animal)){
+            animals.add(animal);
+        }
+    }
+
+    public Vector2d upperRight(){
+        return new Vector2d(width, height);
+    }
+
+    @Override
+    public void run(List<MoveDirection> directions){
+        int n = animals.size();
+        for(int i = 0; i < directions.size(); i++){
+            (animals.get(i % n)).move(directions.get(i));
+        }
     }
 
     @Override
