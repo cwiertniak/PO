@@ -1,11 +1,10 @@
 package agh.ics.oop;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public abstract class AbstractWorldMap implements IWorldMap{
     protected List<Animal> animals = new LinkedList<>();
+    protected Map<Vector2d, Animal> hashAnimals = new HashMap<>();
 
     public List<Animal> getAnimals(){
         return animals;
@@ -22,6 +21,7 @@ public abstract class AbstractWorldMap implements IWorldMap{
     public void add(Animal animal){
         if(place(animal)){
             animals.add(animal);
+            hashAnimals.put(animal.getPosition(), animal);
         }
     }
 
@@ -29,7 +29,9 @@ public abstract class AbstractWorldMap implements IWorldMap{
     public void run(List<MoveDirection> directions){
         int n = this.animals.size();
         for(int i = 0; i < directions.size(); i++){
+            hashAnimals.remove(animals.get(i % n).getPosition());
             (this.animals.get(i % n)).move(directions.get(i));
+            hashAnimals.put(animals.get(i % n).getPosition(), animals.get(i % n));
         }
     }
 }

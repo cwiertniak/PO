@@ -64,22 +64,28 @@ class RectangularMap extends AbstractWorldMap{//implements IWorldMap{
 
     @Override
     public boolean isOccupied(Vector2d position){
-        for(Animal a: animals){
+        /*for(Animal a: animals){
             if(a.getPosition().equals(position)){
                 return true;
             }
+        }*/
+        if(hashAnimals.containsKey(position)){
+            return true;
         }
         return false;
     }
 
     @Override
     public Object objectAt(Vector2d position){
-        if(isOccupied(position)){
+        /*if(isOccupied(position)){
             for(Animal a: animals){
                 if(a.getPosition().equals(position)){
                     return a.toString();
                 }
             }
+        }*/
+        if(hashAnimals.containsKey(position)){
+            return hashAnimals.get(position);
         }
         return null;
     }

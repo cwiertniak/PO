@@ -1,14 +1,13 @@
 package agh.ics.oop;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
+
 import static java.lang.Math.sqrt;
 
 public class GrassField extends AbstractWorldMap{
 
     private final List<Grass> grass = new LinkedList<>();
+    private final Map<Vector2d, Grass> hashGrass = new HashMap<>();
 
     public GrassField(int n){
         placeGrass(n);
@@ -21,22 +20,25 @@ public class GrassField extends AbstractWorldMap{
 
     private void placeGrass(int n){
         Random rand = new Random();
-        //for(int i = 0; i < n; i++){
         int i = 0;
         while (i < n){
             Vector2d next = new Vector2d(rand.nextInt((int) sqrt(n * 10) + 1), rand.nextInt((int) sqrt(n * 10)) + 1);
             if(checkGrass(next)){
                 grass.add(new Grass(next));
+                hashGrass.put(next, new Grass(next));
                 i++;
             }
         }
     }
 
     private boolean checkGrass(Vector2d next){
-        for(Grass g: grass){
+        /*for(Grass g: grass){
             if(next.equals(g.getPosition())){
                 return false;
             }
+        }*/
+        if(hashGrass.containsKey(next)){
+            return false;
         }
         return true;
     }
@@ -66,10 +68,13 @@ public class GrassField extends AbstractWorldMap{
 
     @Override
     public boolean canMoveTo(Vector2d position){
-        for(Animal a: animals){
+        /*for(Animal a: animals){
             if(a.getPosition().equals(position)){
                 return false;
             }
+        }*/
+        if(hashAnimals.containsKey(position)){
+            return false;
         }
         if(position.x >= 0 && position.y >= 0 && position.x <= Integer.MAX_VALUE && position.y <= Integer.MAX_VALUE){
             return true;
@@ -77,18 +82,21 @@ public class GrassField extends AbstractWorldMap{
         return false;
     }
     @Override
-    public boolean place(Animal zwierz){
-        for(Animal a: animals){
-            if(a.getPosition().equals(zwierz.getPosition())){
+    public boolean place(Animal animal){
+        /*for(Animal a: animals){
+            if(a.getPosition().equals(animal.getPosition())){
                 return false;
             }
+        }*/
+        if(hashAnimals.containsKey(animal.getPosition())){
+            return false;
         }
         return true;
     }
 
     @Override
     public boolean isOccupied(Vector2d position){
-        for(Animal a: animals){
+        /*for(Animal a: animals){
             if(a.getPosition().equals(position)){
                 return true;
             }
@@ -97,13 +105,19 @@ public class GrassField extends AbstractWorldMap{
             if(g.getPosition().equals(position)){
                 return true;
             }
+        }*/
+        if(hashAnimals.containsKey(position)){
+            return true;
+        }
+        if(hashGrass.containsKey(position)){
+            return true;
         }
         return false;
     }
 
     @Override
     public Object objectAt(Vector2d position){
-        for(Animal a: animals){
+        /*for(Animal a: animals){
             if(a.getPosition().equals(position)){
                 return a.toString();
             }
@@ -112,6 +126,12 @@ public class GrassField extends AbstractWorldMap{
             if(g.getPosition().equals(position)){
                 return g.toString();
             }
+        }*/
+        if(hashAnimals.containsKey(position)){
+            return hashAnimals.get(position);
+        }
+        if(hashGrass.containsKey(position)){
+            return hashGrass.get(position);
         }
         return null;
     }
