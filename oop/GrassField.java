@@ -11,12 +11,13 @@ public class GrassField extends AbstractWorldMap{
 
     public GrassField(int n){
         placeGrass(n);
+        mapBoundary = new MapBoundary((HashMap<Vector2d, Grass>) hashGrass);
     }
 
-    @Override
+    /*@Override
     public Vector2d upperRight(){
         return getUpperRight();
-    }
+    }*/
 
     private void placeGrass(int n){
         Random rand = new Random();
@@ -43,7 +44,7 @@ public class GrassField extends AbstractWorldMap{
         return true;
     }
 
-    private Vector2d getUpperRight(){
+    /*private Vector2d getUpperRight(){
         int xMax = 0;
         int yMax = 0;
 
@@ -64,7 +65,7 @@ public class GrassField extends AbstractWorldMap{
             }
         }
         return new Vector2d(xMax, yMax);
-    }
+    }*/
 
     @Override
     public boolean canMoveTo(Vector2d position){
@@ -89,7 +90,8 @@ public class GrassField extends AbstractWorldMap{
             }
         }*/
         if(hashAnimals.containsKey(animal.getPosition())){
-            return false;
+            //return false;
+            throw new IllegalArgumentException(animal.getPosition().toString() + " <- this position is taken");
         }
         return true;
     }

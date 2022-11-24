@@ -54,10 +54,16 @@ class RectangularMap extends AbstractWorldMap{//implements IWorldMap{
 
     @Override
     public boolean place(Animal animal){
-        for(Animal a: animals){
+        /*for(Animal a: animals){
             if(a.getPosition().equals(animal.getPosition())){
                 return false;
             }
+        }*/
+        /*if(animal.getPosition().x > this.width || animal.getPosition().y > this.height || animal.getPosition().x < 0 || animal.getPosition().y < 0){
+            throw new IllegalArgumentException(animal.getPosition().toString() + " <- this position is out of bounds");
+        }*/
+        if(hashAnimals.containsKey(animal.getPosition())){
+            throw new IllegalArgumentException(animal.getPosition().toString() + " <- this position is taken");
         }
         return true;
     }

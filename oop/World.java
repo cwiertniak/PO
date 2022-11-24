@@ -1,4 +1,7 @@
 package agh.ics.oop;
+import agh.ics.oop.gui.App;
+import javafx.application.Application;
+
 import java.util.List;
 
 public class World {
@@ -23,19 +26,28 @@ public class World {
         }
     }*/
     public static void main(String[] args){
-
-        String[] dirs = {"f", "b", "r", "l", "f", "f", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f"};
-        //String[] dirs = {"f", "b", "f", "b"};
-        List<MoveDirection> directions = new OptionsParser().parse(dirs);
-        IWorldMap map = new GrassField(10);
-        /*Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
-        IEngine engine = new SimulationEngine(directions, map, positions);
-        engine.run();*/
-        map.add(new Animal(map));
-        map.add(new Animal(map, new Vector2d(2, 2)));
-        map.add(new Animal(map, new Vector2d(3, 4)));
-        map.run(directions);
-        System.out.println(map.toString());
+        try {
+            String[] dirs = {"b", "f", "b", "f", "b", "f"};
+            //String[] dirs = {"f", "b", "r", "l", "f", "f", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f"};
+            //String[] dirs = {"f", "b", "f", "b"};
+            //String[] dirs = {"b", "f", "b", "f", "b", "f"};
+            List<MoveDirection> directions = new OptionsParser().parse(dirs);
+            IWorldMap map = new GrassField(10);
+            /*Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
+            IEngine engine = new SimulationEngine(directions, map, positions);
+            engine.run();*/
+            map.add(new Animal(map));
+            map.add(new Animal(map, new Vector2d(3, 4)));
+            map.add(new Animal(map, new Vector2d(5, 7)));
+            //map.add(new Animal(map, new Vector2d(10, 10)));
+            //map.add(new Animal(map, new Vector2d(3, 4)));
+            map.run(directions);
+            System.out.println(map.toString());
+            Application.launch(App.class, args);
+        }
+        catch(IllegalArgumentException ex){
+            System.out.println("This process has ended due to:" + ex);
+        }
 
         /*String[] arguments = {"r", "f", "lewo", "forward", "f", "E", "f", "f", "b", "b", "l"};
         Animal zwierz = new Animal();
