@@ -1,11 +1,12 @@
 package agh.ics.oop;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class OptionsParser {
+    public static ArrayList<MoveDirection> parse(String[] args){
     //public static List<MoveDirection> parse(String[] args){
-    public static List<MoveDirection> parse(String[] args){
-        List<MoveDirection> moves = new LinkedList<>();
+        ArrayList<MoveDirection> moves = new ArrayList<MoveDirection>();
         for (String dir: args){
             switch (dir){
                 case "f" -> moves.add(MoveDirection.FORWARD);

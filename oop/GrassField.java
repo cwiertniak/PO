@@ -6,20 +6,30 @@ import static java.lang.Math.sqrt;
 
 public class GrassField extends AbstractWorldMap{
 
-    private final List<Grass> grass = new LinkedList<>();
-    private final Map<Vector2d, Grass> hashGrass = new HashMap<>();
+    //private final List<Grass> grass = new LinkedList<>();
+    //private final Map<Vector2d, Grass> hashGrass = new HashMap<>();
+    private MapBoundary boundary = new MapBoundary();
+    private int n;
 
     public GrassField(int n){
+        this.n = n;
+        int i = 0;
+        while (i < n){
+            placeGrass(null);
+            i++;
+        }
+    }
+    /*public GrassField(int n){
         placeGrass(n);
         mapBoundary = new MapBoundary((HashMap<Vector2d, Grass>) hashGrass);
-    }
+    }*/
 
     /*@Override
     public Vector2d upperRight(){
         return getUpperRight();
     }*/
 
-    private void placeGrass(int n){
+    /*private void placeGrass(int n){
         Random rand = new Random();
         int i = 0;
         while (i < n){
@@ -30,19 +40,64 @@ public class GrassField extends AbstractWorldMap{
                 i++;
             }
         }
+    }*/
+
+    public void place(Animal animal){
+        boundary.add(animal.getPosition());
+        animal.addObserver(boundary);
+        super.place(animal);
     }
 
-    private boolean checkGrass(Vector2d next){
-        /*for(Grass g: grass){
-            if(next.equals(g.getPosition())){
-                return false;
-            }
-        }*/
+    private void placeGrass(Vector2d except){
+        Random rand = new Random();
+        int randBound = (int) Math.round(Math.sqrt(n * 10));
+        int newX = rand.nextInt(randBound);
+        int newY = rand.nextInt(randBound);
+
+        Vector2d grassPos = new Vector2d(newX, newY);
+        Grass newGrass;
+        while (isOccupied(grassPos) || grassPos.equals(except)){
+            newX = rand.nextInt(randBound);
+            newY = rand.nextInt(randBound);
+            grassPos = new Vector2d(newX, newY);
+        }
+        grassPos = new Vector2d(newX, newY);
+        newGrass = new Grass(grassPos);
+        mapElements.put(grassPos, newGrass);
+        boundary.add(grassPos);
+    }
+
+    public void placeTestGrass(Vector2d position){
+        n++;
+        if(!isOccupied(position)){
+            mapElements.put(position, new Grass(position));
+            boundary.add(position);
+        }
+        else
+            throw new IllegalArgumentException("Cannot place grass at " + position);
+    }
+
+    public Vector2d getUpBoundary(){
+        upBoundary = boundary.getUpBoundary();
+        return upBoundary;
+    }
+
+    public Vector2d getLowBoundary(){
+        lowBoundary = boundary.getLowBoundary();
+        return lowBoundary;
+    }
+
+    public String toString(){
+        upBoundary = boundary.getUpBoundary();
+        lowBoundary = boundary.getLowBoundary();
+        return visualizer.draw(lowBoundary, upBoundary);
+    }
+    /*private boolean checkGrass(Vector2d next){
         if(hashGrass.containsKey(next)){
             return false;
         }
         return true;
-    }
+    }*/
 
     /*private Vector2d getUpperRight(){
         int xMax = 0;
@@ -67,13 +122,8 @@ public class GrassField extends AbstractWorldMap{
         return new Vector2d(xMax, yMax);
     }*/
 
-    @Override
+    /*@Override
     public boolean canMoveTo(Vector2d position){
-        /*for(Animal a: animals){
-            if(a.getPosition().equals(position)){
-                return false;
-            }
-        }*/
         if(hashAnimals.containsKey(position)){
             return false;
         }
@@ -81,33 +131,18 @@ public class GrassField extends AbstractWorldMap{
             return true;
         }
         return false;
-    }
-    @Override
+    }*/
+    /*@Override
     public boolean place(Animal animal){
-        /*for(Animal a: animals){
-            if(a.getPosition().equals(animal.getPosition())){
-                return false;
-            }
-        }*/
         if(hashAnimals.containsKey(animal.getPosition())){
             //return false;
             throw new IllegalArgumentException(animal.getPosition().toString() + " <- this position is taken");
         }
         return true;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean isOccupied(Vector2d position){
-        /*for(Animal a: animals){
-            if(a.getPosition().equals(position)){
-                return true;
-            }
-        }
-        for(Grass g: grass){
-            if(g.getPosition().equals(position)){
-                return true;
-            }
-        }*/
         if(hashAnimals.containsKey(position)){
             return true;
         }
@@ -115,20 +150,10 @@ public class GrassField extends AbstractWorldMap{
             return true;
         }
         return false;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public Object objectAt(Vector2d position){
-        /*for(Animal a: animals){
-            if(a.getPosition().equals(position)){
-                return a.toString();
-            }
-        }
-        for(Grass g: grass){
-            if(g.getPosition().equals(position)){
-                return g.toString();
-            }
-        }*/
         if(hashAnimals.containsKey(position)){
             return hashAnimals.get(position);
         }
@@ -136,5 +161,5 @@ public class GrassField extends AbstractWorldMap{
             return hashGrass.get(position);
         }
         return null;
-    }
+    }*/
 }

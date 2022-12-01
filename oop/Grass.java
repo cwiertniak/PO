@@ -1,6 +1,6 @@
 package agh.ics.oop;
 
-public class Grass {
+public class Grass extends AbstractMapElement{
 
     private Vector2d position;
 
@@ -14,5 +14,13 @@ public class Grass {
 
     public String toString(){
         return "*";
+    }
+
+    public String getImagePath(){
+        return "src/main/resources/grass.png";
+    }
+
+    public String getLabel(){
+        return "Grass";
     }
 }
