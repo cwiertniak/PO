@@ -9,10 +9,11 @@ public class GrassField extends AbstractWorldMap{
     //private final List<Grass> grass = new LinkedList<>();
     //private final Map<Vector2d, Grass> hashGrass = new HashMap<>();
     private MapBoundary boundary = new MapBoundary();
-    private int n;
+    private int grassCount;
+    private Random rand = new Random();
 
     public GrassField(int n){
-        this.n = n;
+        this.grassCount = n;
         int i = 0;
         while (i < n){
             placeGrass(null);
@@ -49,25 +50,25 @@ public class GrassField extends AbstractWorldMap{
     }
 
     private void placeGrass(Vector2d except){
-        Random rand = new Random();
-        int randBound = (int) Math.round(Math.sqrt(n * 10));
-        int newX = rand.nextInt(randBound);
-        int newY = rand.nextInt(randBound);
+        //Random rand = new Random();
+        int randBound = (int) Math.round(Math.sqrt(grassCount * 10));
+        int nextX = rand.nextInt(randBound);
+        int nextY = rand.nextInt(randBound);
 
-        Vector2d grassPos = new Vector2d(newX, newY);
+        Vector2d grassPos = new Vector2d(nextX, nextY);
         Grass newGrass;
         while (isOccupied(grassPos) || grassPos.equals(except)){
-            newX = rand.nextInt(randBound);
-            newY = rand.nextInt(randBound);
-            grassPos = new Vector2d(newX, newY);
+            nextX = rand.nextInt(randBound);
+            nextY = rand.nextInt(randBound);
+            grassPos = new Vector2d(nextX, nextY);
         }
-        grassPos = new Vector2d(newX, newY);
+        grassPos = new Vector2d(nextX, nextY);
         newGrass = new Grass(grassPos);
         mapElements.put(grassPos, newGrass);
         boundary.add(grassPos);
     }
 
-    public void placeTestGrass(Vector2d position){
+    /*public void placeTestGrass(Vector2d position){
         n++;
         if(!isOccupied(position)){
             mapElements.put(position, new Grass(position));
@@ -75,7 +76,7 @@ public class GrassField extends AbstractWorldMap{
         }
         else
             throw new IllegalArgumentException("Cannot place grass at " + position);
-    }
+    }*/
 
     public Vector2d getUpBoundary(){
         upBoundary = boundary.getUpBoundary();

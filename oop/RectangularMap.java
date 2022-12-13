@@ -26,7 +26,8 @@ public class RectangularMap extends AbstractWorldMap{//implements IWorldMap{
     }
 
     public boolean canMoveTo(Vector2d position){
-        return super.canMoveTo(position)&&position.follows(lowBoundary)&&position.precedes(upBoundary);
+        //return super.canMoveTo(position)&&position.follows(lowBoundary)&&position.precedes(upBoundary);
+        return (canMoveTo(position) && position.follows(lowBoundary) && position.precedes(upBoundary));
     }
     /*public void toString(IWorldMap map){
         MapVisualizer mapVis = new MapVisualizer(map);

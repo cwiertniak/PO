@@ -15,8 +15,6 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
         return animals;
     }*/
 
-    //protected abstract Vector2d upperRight();
-
     public Vector2d getUpBoundary(){
         return upBoundary;
     }
@@ -38,7 +36,6 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
         else {
             throw new IllegalArgumentException("Cannot place animal at " + position);
         }
-        return;
     }
 
     public boolean isOccupied(Vector2d position){

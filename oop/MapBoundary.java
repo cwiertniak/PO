@@ -33,12 +33,12 @@ public class MapBoundary implements IPositionChangeObserver{
     }
 
     public Vector2d getUpBoundary(){
-        //return new Vector2d(sortedX.last().x, sortedY.last().y);
-        return sortedX.last().upperRight(sortedY.last());
+        return new Vector2d(sortedX.last().x, sortedY.last().y);
+        //return sortedX.last().upperRight(sortedY.last());
     }
 
     public Vector2d getLowBoundary(){
-        //return new Vector2d(sortedX.first().x, sortedY.first().y);
-        return sortedX.first().lowerLeft(sortedY.first());
+        return new Vector2d(sortedX.first().x, sortedY.first().y);
+        //return sortedX.first().lowerLeft(sortedY.first());
     }
 }

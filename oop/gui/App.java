@@ -31,13 +31,12 @@ public class App extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         button.setOnAction((event -> {
-            map = new GrassField(15);
+            map = new GrassField(20);
             String args = textField.getText();
             lowerBound = map.getLowBoundary();
             upperBound = map.getUpBoundary();
             SimulationEngine engine =
-                    new SimulationEngine(
-                            new OptionsParser().parse(new StringToArray().convert(textField.getText())), map, positions, this);
+                    new SimulationEngine(new OptionsParser().parse(textField.getText().split(" ")), map, positions, this);
             Thread engineThread = new Thread(engine);
             engineThread.start();
         }));
